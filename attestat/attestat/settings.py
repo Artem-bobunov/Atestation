@@ -87,11 +87,11 @@ WSGI_APPLICATION = 'attestat.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.postgresql_psycopg2',
-        'NAME':'attestation_cgko',
-        'USER':'postgres',
-        'PASSWORD':'Root123!',
-        'HOST':'192.168.1.253',
-        'PORT':'5439',
+        'NAME':'',
+        'USER':'',
+        'PASSWORD':'',
+        'HOST':'',
+        'PORT':'',
 
     }
 }
