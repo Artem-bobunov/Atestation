@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block container %}
+<style>
+.inp{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  margin-left: 20px;
+}
+
+</style>
+
+<form  method="post" ><!--action="{% url 'results' %}"-->
+        {% csrf_token %}
+    <ul class="list-group">
+        <li class="list-group-item" style="background-color:#eaf4f5">
+            <div class="list-group">
+              <center><a href="#!" class="list-group-item list-group-item-action list-group-item-primary">{{dep}}
+                <br>Пользователь: {{last_name}} {{first_name}}</a></center>
+            </div>
+        </li>
+        <div class="alert alert-primary mt-2 mb-2 " role="alert">
+            <strong>Категория вопросов: Основное направление деятельности</strong>
+            {% for key,values in dictonary.items%}
+                <div class="mb-3" style="border-radius: 10px;border: 3px solid #fff;">
+                        <li class="list-group-item" name="keys" value="{{key}}" style="background-color:#eaf4f5" >
+                            <input type="hidden" name="keys" value="{{key}}"   ><b class="font-weight-bold" style="color:#080808" >{{key}}</b></li>
+							
+                            {% for v in values %}
+									
+										
+                                <li class="list-group-item" style="background-color:#eaf4f5" id="arr" >
+								<input  type="checkbox" name="check" style="transform:scale(1.3);"  value="{{v}}" >
+								<a style="color:#080808" >								
+									{{v}}</a>
+										
+										<br>
+                                </li>
+								
+                            {% endfor %}
+							
+                    </div>
+					
+            {% endfor %}
+			
+            </div>
+
+        <div class="alert alert-primary  mb-2" role="alert">
+            <strong>Категория вопросов: по делопроизводству</strong>
+
+                {% for key1,values1 in dictonary1.items%}
+                <div class=" mt-2 mb-3" style="border-radius: 10px;border: 3px solid #fff;">
+                    <li class="list-group-item" style="background-color:#eaf4f5;">
+                        <input type="hidden" name="keys1" value="{{key1}}"><b class="font-weight-bold" style="color:#080808">{{key1}}</b>
+                        {% for v1 in values1 %}
+
+                            <li class="list-group-item" style="background-color:#eaf4f5">
+                                <input  type="checkbox" name="check1"  value="{{v1}}" style="transform:scale(1.3);">
+                                <a style="color:#080808">{{v1}}</a>
+                                <br>
+                            </li>
+							</li>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        <div class="alert alert-primary mt-2 mb-2" role="alert">
+            <strong>Категория вопросов: по охране труда</strong>
+
+            {% for key2,values2 in dictonary2.items%}
+                <div class=" mt-2 mb-3" style="border-radius: 10px;border: 3px solid #fff;">
+                <li class="list-group-item" style="background-color:#eaf4f5">
+                    <input type="hidden" name="keys2" value="{{key2}}"><a class="font-weight-bold" style="color:#080808">{{key2}}</a></li>
+                    {% for v2 in values2 %}
+
+                        <li class="list-group-item" style="background-color:#eaf4f5">
+                            <input  type="checkbox" name="check2"  value="{{v2}}" style="transform:scale(1.3);">
+                            <a style="color:#080808">{{v2}}</a>
+                            <br>
+                        </li>
+                    {% endfor %}
+                    </div>
+
+            {% endfor %}
+            </div>
+        <div class="alert alert-primary mt-2 mb-2" role="alert">
+            <strong>Категория вопросов: по трудовому законодательству</strong>
+
+                {% for key3,values3 in dictonary3.items%}
+                <div class=" mt-2 mb-3">
+                    <li class="list-group-item" style="background-color:#eaf4f5">
+                        <input type="hidden" name="keys3" value="{{key3}}"><b class="font-weight-bold" style="color:#080808">{{key3}}</b></li>
+                        {% for v3 in values3 %}
+
+                            <li class="list-group-item" style="background-color:#eaf4f5">
+                                <input  type="checkbox" name="check3"  value="{{v3}}" style="transform:scale(1.3);">
+                                <a style="color:#080808">{{v3}}</a>
+                                <br>
+                            </li>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+    </ul>
+    <center><button type="submit" name = "res" class="btn btn-success mt-3 mb-4" >Закончить тестирование</button></center>
+        </form>
+		
+
+{% endblock %}

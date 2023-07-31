@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block container %}
+<style>
+table, th, td {
+	margin-top: 150:px;
+    border: 1px solid black;
+    border-collapse: collapse;
+	background-color: #eaf4f5;
+</style>
+    {% csrf_token %}
+    <table class="table" ><!--#eaf4f5;-->
+
+      <tbody >
+        <tr>
+          <th style="text-align:center;" colspan="2">{{dep}} </th>
+          <!--<td><center>{{dep}}</center></td>-->
+        </tr>
+        <tr>
+          <th style="text-align:center; font-weight:500;" colspan="2" scope="row">{{last_name}} {{first_name}}</th>
+          <!--<td><center>{{usr}}</center></td>-->
+        </tr>
+        <tr>
+          <th  scope="row">Категория "Основное направление деятельности"</th>
+          <td><center>{{tb}}</center></td>
+        </tr>
+        <tr>
+          <th  scope="row">Категория "Делопроизводство"</th>
+          <td><center>{{tb1}}</center></td>
+        </tr>
+        <tr>
+          <th scope="row">Категория "Охрана труда"</th>
+          <td><center>{{tb2}}</center></td>
+        </tr>
+        <tr>
+          <th  scope="row">Категория "Трудовое законодательство"</th>
+          <td><center>{{tb3}}</center></td>
+        </tr>
+        <tr>
+          <th >Общее количество баллов</th>
+          <td><center>{{total}}</center></td>
+        </tr>
+        <tr>
+          <th scope="row">Результаты тестирования</th>
+          <td><center>
+              <a  name="q" href="http://192.168.1.253:8004/media/{{file_download}}" download>Скачать результат тестирования</a>
+          </center></td>
+        </tr>
+      </tbody>
+    </table>
+	
+	<div class="alert alert-primary  mb-2" role="alert">
+		<strong>Основное направление деятельности</strong>
+		{% for key,values in res_dslv.items%}
+				<li class="list-group-item mt-2" style="background-color:#eaf4f5;"><a class="font-weight-bold" name = "ques" style="color:#080808">{{key}}</a></li>
+
+						<li class="list-group-item " style="background-color:#eaf4f5">
+							{% if values|first == values|last %}
+							<a style="color:#080808" >Выбранный вами ответ:</a> <b style="color:#29e109"> {{ values|first }} </b>
+							{% endif %}
+							{% if values|first != values|last %}
+							<a style="color:#080808" >Выбранный вами ответ:</a> <b style="color:#f10303"> {{ values|first }} </b>
+							{% endif %}
+							<li class="list-group-item mb-3" style="background-color:#eaf4f5">
+							<a style="color:#080808" >Правильный ответ:</a> <b style="color:#29e109"> {{ values|last }} </b>
+							</li>	
+		{% endfor %}
+	</div>
+	<div class="alert alert-primary mb-2 " role="alert">
+		<strong>Делопроизводство</strong>
+		{% for key1,values1 in res_dslv1.items%}
+					<li class="list-group-item mt-2" style="background-color:#eaf4f5"><a class="font-weight-bold" name = "ques1" style="color:#080808">{{key1}}</a> </li>
+							<li class="list-group-item" style="background-color:#eaf4f5">
+								{% if values1|first == values1|last %}
+								 <a style="color:#080808" >Выбранный вами ответ:</a> <b style="color:#29e109"> {{ values1|first }} </b>
+								{% endif %}
+								{% if values1|first != values1|last %}
+								<a style="color:#080808" >Выбранный вами ответ:</a> <b style="color:#f10303"> {{ values1|first }} </b>
+								{% endif %}
+								<li class="list-group-item mb-3" style="background-color:#eaf4f5">
+								<a style="color:#080808" >Правильный ответ:</a> <b style="color:#29e109"> {{ values1|last }} </b>
+								</li>
+								</li>
+			{% endfor %}
+	</div>  
+	<div class="alert alert-primary  mb-2" role="alert">
+				<strong>Охрана труда</strong>
+		   
+			{% for key2,values2 in res_dslv2.items%}
+					<li class="list-group-item mt-2" style="background-color:#eaf4f5;color:#080808"><a class="font-weight-bold" name = "ques2" >{{key2}}</a> </li>
+							<li class="list-group-item " style="background-color:#eaf4f5">
+								{% if values2|first == values2|last %}
+								<a style="color:#080808" >Выбранный вами ответ:</a> <b style="color:#29e109"> {{ values2|first }} </b>
+								{% endif %}
+								{% if values2|first != values2|last %}
+								<a style="color:#080808" >Выбранный вами ответ:</a> <b style="color:#f10303"> {{ values2|first }} </b>
+								{% endif %}
+							<li class="list-group-item mb-3" style="background-color:#eaf4f5">
+								<a style="color:#080808" >Правильный ответ:</a> <b style="color:#29e109"> {{ values2|last }} </b>
+							</li>
+							</li>
+			{% endfor %}
+	</div> 
+	<div class="alert alert-primary mb-2" role="alert">
+						<strong >Трудовое законодательство</strong>
+	
+				{% for key3,values3 in res_dslv3.items%}
+							<li class="list-group-item mt-2" style="background-color:#eaf4f5"><a class="font-weight-bold" name = "ques3" style="color:#080808">{{key3}}</a> </li>
+									<li class="list-group-item " style="background-color:#eaf4f5">
+											{% if values3|first == values3|last %}
+											<a style="color:#080808" >Выбранный вами ответ:</a> <b style="color:#29e109"> {{ values3|first }} </b>
+											{% endif %}
+											{% if values3|first != values3|last %}
+											<a style="color:#080808" >Выбранный вами ответ:</a> <b style="color:#f10303"> {{ values3|first }} </b>
+											{% endif %}
+											<li class="list-group-item mb-3" style="background-color:#eaf4f5">
+												<a style="color:#080808" >Правильный ответ:</a> <b style="color:#29e109"> {{ values3|last }} </b>
+											</li>
+										
+				{% endfor %}
+	</div>  
+ <center><a type="button" class="btn btn-primary btn mb-2" href="{% url 'login'%}">Закончить просмотр</a></center>
+{% endblock %}

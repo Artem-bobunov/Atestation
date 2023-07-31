@@ -1,0 +1,9 @@
+var allChecks = document.getElementsById("a1");
+							console.log(allChecks,'Эта хоень тут')
+									function switchCheck(elem) {
+									  [].forEach.call(allChecks, function(elEach) {
+										if (elem.dataset.group == elEach.dataset.group && elem != elEach) {
+										  elEach.disabled = (elem.checked) ? true : false;
+										}
+									  })
+									}

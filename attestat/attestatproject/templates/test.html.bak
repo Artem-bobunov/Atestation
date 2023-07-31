@@ -1,0 +1,124 @@
+<!DOCTYPE HTML> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<link href="https://unpkg.com/bootstrap@3.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/bootstrap@3.3.2/dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/bootstrap-multiselect@0.9.13/dist/js/bootstrap-multiselect.js"></script>
+<link href="https://unpkg.com/bootstrap-multiselect@0.9.13/dist/css/bootstrap-multiselect.css" rel="stylesheet"/>
+
+<style>
+.box {
+    display: none;
+}
+.multiselect-container>li>a>label {
+  padding: 4px 20px 3px 20px;
+}
+</style> 
+<script>
+var currBox = 0;
+var mass = []
+function Selected(a) {
+		if (a){
+		document.getElementById("Block"+a).style.display = "block";
+        if(currBox)   document.getElementById("Block"+currBox).style.display = "none"; 
+        currBox = a;
+		}
+}
+$(function() {
+    
+    $('#actSelect').multiselect({
+        
+        includeSelectAllOption: true
+    });
+    
+    
+});
+
+</script>    
+</head> 
+
+<body>
+
+<div>Выберите тип документа из выпадающего списка:</div><br/>
+<select id="actSelect"  multiple="multiple" class="Validate_Required " name="actSelect" onchange="Selected(this.value)">
+       <option value="1">Финансово-экономический отдел</option>
+       <option value="2">Договор</option>
+       <option value="3">Дополнительное соглашение</option>
+       <option value="4">Письмо</option>
+       <option value="5">Приказ</option>
+</select>
+      
+     
+    <div id="Block1" class="box"><br/>
+      Выберите сотрудников:
+            <select>
+                   <option value="" selected="selected">-</option>
+                   <option value="a">
+					  
+						  Бурлаков Алексей Викторович
+					   
+				   </option>
+                   <option value="b">Кубасова Марина Ивановна</option>
+                   <option value="c">Морозова Юлия Анатольевна</option>
+                   <option value="d">Ульянова Елена Владимировна</option>
+                   <option value="e">Иванникова Любовь Сергеевна</option>
+                   <option value="f">Богачева Елена Владимировна</option>
+            </select>
+    </div>
+     
+    <div id="Block2" class="box"><br/>
+        Предмет договора:
+            <select>
+                   <option value="" selected="selected">-</option>
+                   <option value="a">Выполнение работ</option>
+                   <option value="b">Оказание услуг</option>
+                   <option value="c">Поставка</option>
+            </select>
+    </div>
+     
+    <div id="Block3" class="box"><br/>
+      Предмет соглашения:
+            <select>
+                    <option value="" selected="selected">-</option>
+                    <option value="a">Изменение цены</option>
+                    <option value="b">Изменение сроков</option>
+                    <option value="b">Изменение объемов</option>
+            </select>
+    </div>
+     
+    <div id="Block4" class="box"><br/>
+      Выберите тип письма:
+            <select>
+                    <option value="" selected="selected">-</option>
+                    <option value="a">Входящее</option>
+                    <option value="b">Исходящее</option>
+            </select>
+    </div>
+ 
+<div id="Block5" class="box"><br/>  
+<form method="post" action="index.php">
+ 
+ 
+        Полное название организации <br/>
+        <textarea cols="40" rows="2" name="fullname"></textarea><br/>
+        Короткое название организации <br/>
+        <input type="text" name="smallname" /><br/>
+        ИНН организации <br/>
+        <input type="text" name="inn" /><br/>
+        КПП организации <br/>
+        <input type="text" name="kpp" /><br/>
+        Индекс организации <br/>
+        <input type="text" name="ind" /><br/>
+        Страна расположения организации <br/>
+        <input type="text" name="strana" /><br/>
+        Город организации <br/>
+        <input type="text" name="gorod" /><br/>
+        Адрес организации <br/>
+        <input type="text" name="adress" /><br/><br/>
+        <input type="submit" name="add" value="Добавить организацию" />
+ </form>
+</div>
+</body> 
+</html>

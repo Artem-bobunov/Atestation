@@ -1,0 +1,108 @@
+<script>
+var expanded = false;
+
+function showCheckboxes() {
+  var checkboxes = document.getElementById("checkboxes");
+  if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+  }
+}
+</script>
+
+<style>
+.multiselect {
+  width: 200px;
+}
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+  font-weight: bold;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+}
+
+#checkboxes label {
+  display: block;
+}
+
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
+.box {
+    display: none;
+}
+</style>
+
+
+<form>
+  <div class="multiselect">
+    <div class="selectBox" onclick="showCheckboxes()">
+      <select>
+        <option>Структурное подразделение</option>
+      </select>
+      <div class="overSelect"></div>
+    </div>
+    <div id="checkboxes">
+      <label for="one">
+        <input type="checkbox" id="one" />First checkbox</label>
+      <label for="two">
+        <input type="checkbox" id="two" />Second checkbox</label>
+      <label for="three">
+        <input type="checkbox" id="three" />Third checkbox</label>
+    </div>
+  </div>
+</form>
+
+
+
+
+<form>
+  <div class="multiselect">
+    <div class="selectBox" >
+      <select onchange="showCheckboxes(this.value)">
+		<option value="" selected="selected">-</option>
+        <option>Выбирите отдел</option>
+      </select>
+      <div class="overSelect"></div>
+    </div>
+    <div id="checkboxes">
+      <label for="one">
+        <input type="checkbox" value="1" id="one" />Финансовый отдел</label>
+      <label for="two">
+        <input type="checkbox" value="2" id="two" />Юридический отдел</label>
+      <label for="three">
+        <input type="checkbox" value="3" id="three" />ОПДиВ</label>
+    </div>
+  </div>
+  <div id="Block1" class="box"><br/>
+      Выберите сотрудников:
+            <select>
+                   <option value="" selected="selected">-</option>
+                   <option value="a">Бурлаков Алексей Викторович</option>
+                   <option value="b">Кубасова Марина Ивановна</option>
+                   <option value="c">Морозова Юлия Анатольевна</option>
+                   <option value="d">Ульянова Елена Владимировна</option>
+                   <option value="e">Иванникова Любовь Сергеевна</option>
+                   <option value="f">Богачева Елена Владимировна</option>
+            </select>
+    </div>
+</form>

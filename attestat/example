@@ -1,0 +1,254 @@
+<div class="alert alert-primary mt-2 mb-2" role="alert">
+            <strong>Категория вопросов: {{cat}}</strong>
+        </div>
+        {% for key1,values1 in dictonary1.items%}
+            <li class="list-group-item"><a class="font-weight-bold" name = "ques1">{{key1}}</a></li>
+                {% for v1 in values1 %}
+
+                    <li class="list-group-item">
+                        <input  type="checkbox" name="check1"  value="{{v1}}">
+                        <a>{{v1}}</a>
+                        <br>
+                    </li>
+                {% endfor %}
+
+        {% endfor %}
+
+        <div class="alert alert-primary mt-2 mb-2" role="alert">
+            <strong>Категория вопросов: по охране труда</strong>
+        </div>
+        {% for key2,values2 in dictonary2.items%}
+            <li class="list-group-item"><a class="font-weight-bold" name = "ques2">{{key2}}</a></li>
+                {% for v2 in values2 %}
+
+                    <li class="list-group-item">
+                        <input  type="checkbox" name="check2"  value="{{v2}}">
+                        <a>{{v2}}</a>
+                        <br>
+                    </li>
+                {% endfor %}
+        {% endfor %}
+
+         <div class="alert alert-primary mt-2 mb-2" role="alert">
+            <strong>Категория вопросов: по трудовому законодательству</strong>
+        </div>
+        {% for key3,values3 in dictonary3.items%}
+            <li class="list-group-item"><a class="font-weight-bold" name = "ques3">{{key3}}</a></li>
+                {% for v3 in values3 %}
+                    <li class="list-group-item">
+                        <input  type="checkbox" name="check3"  value="{{v3}}">
+                        <a>{{v3}}</a>
+                        <br>
+                    </li>
+                {% endfor %}
+        {% endfor %}
+    </ul>
+
+
+
+
+
+   <div class="alert alert-primary mt-2 mb-2" role="alert">
+            <strong>Категория вопросов: По кадровому законодательству</strong>
+        </div>
+    {% for key1,values1 in res_dslv1.items%}
+                <li class="list-group-item"><a class="font-weight-bold" name = "ques1">{{key1}}</a> </li>
+                        <li class="list-group-item">
+                            {% if values1|first == values1|last %}
+                            <a  >Выбранный вами ответ:</a> <a class="bg-success text-white"> {{ values1|first }} </a>
+                            {% endif %}
+                            {% if values1|first != values1|last %}
+                            <a  >Выбранный вами ответ:</a> <a class="bg-danger text-white"> {{ values1|first }} </a>
+                            {% endif %}
+                            <li class="list-group-item">
+                            <a  >Правильный ответ:</a> <a class="bg-success text-white"> {{ values1|last }} </a>
+                            </li>
+
+        {% endfor %}
+
+
+
+        #print(check_arr)
+        check_arr1 = []
+        check_arr2 = []
+        check_arr3 = []
+        # Ответы по КЗ заносим в массив
+        for b in get_check1:
+            check_arr1.append(b)
+        for b10 in get_check2:
+            check_arr2.append(b10)
+        for b11 in get_check3:
+            check_arr3.append(b11)
+
+        #Проходим по  всем значениям уже имеющегося словаря
+        # Пусть e будет элементом ключа
+        # Пусть l будет элементом значения
+        for e,l in dslv.items():
+            #Проходимся по массиву полученных ответов от чекбоксов
+            for ch in check_arr:
+                #Проходимся по значениям словаря
+                for el in l:
+                    if ch == el:
+                        #print(ch, 'Элемент полученного ответа')
+                        #print(el, 'Элемент словаря-значение')
+                        #print(e)
+                        #print('Попали')
+                        #Ищем вопрос в таблице Question при условии что ключ(вопрос в словаре)
+                        # совпадает с вопросом на странице и выводим Id вопрос в таблице Question
+                        res_ques = Question.objects.get(questions=e).id
+                        #print(res_ques)
+
+                        # Смотрим совпадает ли ответ из слваря (значения) с полученным нами ответом
+                        # и выводим айдишник
+                        res_ans = Answer.objects.get(answers=ch).ball #get
+                        #print(res_ans)
+                        if res_ans == '1':
+                            try_ques = Answer.objects.get(answers=ch).answers
+                            #print(try_ques,'Правильный ответ')
+                            total_score.append(int(res_ans))
+                        elif res_ans =='0':
+                            #Правильный айдишник это res_ques
+                            try_ques = Answer.objects.filter(quest=res_ques).get(ball='1').answers
+                            #print(try_ques,'Это правильный ответ')
+                        tb = sum(total_score)
+                        #print(tb,'Общий балл')
+                        res_dslv.setdefault(e,[ch,try_ques])
+                        res_db = Result()
+                        res_db.departament = dep
+                        res_db.users = usr
+                        res_db.questions = e
+                        res_db.category = cat1
+                        res_db.select_answers = ch
+                        res_db.good_answers = el
+                        res_db.result_balls = res_ans
+                        res_db.save()
+                        #print('Записали в БД')
+
+        for ks,vs in dslv1.items():
+        # Проходимся по массиву полученных ответов от чекбоксов
+            for ch1 in check_arr1:
+                for el1 in vs:
+                    if ch1 == el1:
+                        #print(ch1, 'Элемент полученного ответа')
+                        #print(el1, 'Элемент словаря-значение')
+                        #print(ks)
+                        #print('Попали')
+                        # Ищем вопрос в таблице Question при условии что ключ(вопрос в словаре)
+                        # совпадает с вопросом на странице и выводим Id вопрос в таблице Question
+                        res_ques1 = Question.objects.get(questions=ks).id
+                        #print(res_ques1)
+
+                        # Смотрим совпадает ли ответ из слваря (значения) с полученным нами ответом
+                        # и выводим айдишник
+                        res_ans1 = Answer.objects.get(answers=ch1).ball
+                        #print(res_ans1)
+                        try_ques = None
+                        if res_ans1 == '1':
+                            try_ques1 = Answer.objects.get(answers=ch1).answers
+                            #print(try_ques1, 'Правильный ответ')
+                            total_score1.append(int(res_ans1))
+                        elif res_ans1 == '0':
+                            # Правильный айдишник это res_ques
+                            try_ques1 = Answer.objects.filter(quest=res_ques1).get(ball='1').answers
+                            #print(try_ques1, 'Это правильный ответ')
+                        tb1 = sum(total_score1)
+                        #print(tb1, 'Общий балл')
+                        res_dslv1.setdefault(ks, [ch1, try_ques1])
+                        #print(res_dslv1)
+                        res_db1 = Result()
+                        res_db1.departament = dep
+                        res_db1.users = usr
+                        res_db1.questions = ks
+                        res_db1.category = cat2
+                        res_db1.select_answers = ch1
+                        res_db1.good_answers = el1
+                        res_db1.result_balls = res_ans1
+                        res_db1.save()
+                        #print('Записали в БД1')
+
+        for ks1,vs1 in dslv2.items():
+        # Проходимся по массиву полученных ответов от чекбоксов
+            for ch2 in check_arr2:
+                for el2 in vs1:
+                    if ch2 == el2:
+                        #print(ch2, 'Элемент полученного ответа')
+                        #print(el2, 'Элемент словаря-значение')
+                        #print(ks1)
+                        #print('Попали')
+                        # Ищем вопрос в таблице Question при условии что ключ(вопрос в словаре)
+                        # совпадает с вопросом на странице и выводим Id вопрос в таблице Question
+                        res_ques2 = Question.objects.get(questions=ks1).id
+                        #print(res_ques2)
+
+                        # Смотрим совпадает ли ответ из слваря (значения) с полученным нами ответом
+                        # и выводим айдишник
+                        res_ans2 = Answer.objects.get(answers=ch2).ball #get
+                        #print(res_ans2)
+                        #try_ques = None
+                        if res_ans2 == '1':
+                            try_ques2 = Answer.objects.get(answers=ch2).answers
+                            #print(try_ques2, 'Правильный ответ')
+                            total_score2.append(int(res_ans2))
+                        elif res_ans2 == '0':
+                            # Правильный айдишник это res_ques
+                            try_ques2 = Answer.objects.filter(quest=res_ques2).get(ball='1').answers
+                            #print(try_ques2, 'Это правильный ответ')
+                        tb2 = sum(total_score2)
+                        #print(tb2, 'Общий балл')
+                        res_dslv2.setdefault(ks1, [ch2, try_ques2])
+                        #print(res_dslv2)
+                        res_db2 = Result()
+                        res_db2.departament = dep
+                        res_db2.users = usr
+                        res_db2.questions = ks1
+                        res_db2.category = cat3
+                        res_db2.select_answers = ch2
+                        res_db2.good_answers = el2
+                        res_db2.result_balls = res_ans2
+                        res_db2.save()
+                        #print('Записали в БД2')
+
+        for ks2,vs2 in dslv3.items():
+        # Проходимся по массиву полученных ответов от чекбоксов
+            for ch3 in check_arr3:
+                for el3 in vs2:
+                    if ch3 == el3:
+                        #print(ch3, 'Элемент полученного ответа')
+                        #print(el3, 'Элемент словаря-значение')
+                        #print(ks2)
+                        #print('Попали')
+                        # Ищем вопрос в таблице Question при условии что ключ(вопрос в словаре)
+                        # совпадает с вопросом на странице и выводим Id вопрос в таблице Question
+                        res_ques3 = Question.objects.get(questions=ks2).id
+                        #print(res_ques3)
+
+                        # Смотрим совпадает ли ответ из слваря (значения) с полученным нами ответом
+                        # и выводим айдишник
+                        res_ans3 = Answer.objects.get(answers=ch3).ball
+                        #print(res_ans3)
+                        #try_ques = None
+                        if res_ans3 == '1':
+                            try_ques3 = Answer.objects.get(answers=ch3).answers
+                            #print(try_ques3, 'Правильный ответ')
+                            total_score3.append(int(res_ans3))
+                        elif res_ans3 == '0':
+                            # Правильный айдишник это res_ques
+                            try_ques3 = Answer.objects.filter(quest=res_ques3).get(ball='1').answers
+                            #print(try_ques3, 'Это правильный ответ')
+                        tb3 = sum(total_score3)
+                        #print(tb3, 'Общий балл')
+                        res_dslv3.setdefault(ks2, [ch3, try_ques3])
+                        #print(res_dslv2)
+                        res_db3 = Result()
+                        res_db3.departament = dep
+                        res_db3.users = usr
+                        res_db3.questions = ks2
+                        res_db3.category = cat3
+                        res_db3.select_answers = ch3
+                        res_db3.good_answers = el3
+                        res_db3.result_balls = res_ans3
+                        res_db3.save()
+                        #print('Записали в БД2')
+
+
+        all_ball = int(tb+tb1+tb2+tb3)

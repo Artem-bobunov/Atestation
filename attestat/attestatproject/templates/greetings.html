@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block container %}
+<style>
+  .btn {
+margin-top:20px;
+    padding: 10px 20px 10px 20px;
+    font-size:16px;
+    background-color:#71BA51;
+    border-color:#71BA51;
+    --bs-btn-hover-bg:#71BA51;
+    --bs-btn-hover-border-color: #71BA51;
+  }
+</style>
+<div >
+	<div class="col" style="margin-left:300px;margin-top:250px">
+		<p style="margin-left:170px">
+		  <img src="http://volbti.ru/wp-content/uploads/elementor/thumbs/logo2-p5d9eaa7gi9uqo9ml9dzvwkrik8an1pg2u3c1qg0ju.png" alt="logo">
+		</p>
+		<div class="row">
+		  <h2 style="font-size:16px; text-align:center;">Государственное бюджетное учреждение Волгоградской области <br>«Центр государственной кадастровой оценки»</h2>
+		</div>
+		<div class="row">
+		  <h3 style="font-size:18px; text-align:center;font-weight:600;">Аттестация работников ГБУ ВО «Центр ГКО» 2022 год</h3>
+		</div>
+		
+		<div class="row" style="margin-left:100px">
+			<button type="button" class="btn btn-primary"><a style="color:white;text-decoration:none" href="{% url 'login'%}">Приступить к тестированию</a></button>
+		</div>
+		<div class="row mt-2" style="margin-left:79px">
+			<a href="http://192.168.1.253:8004/Результаты тестирований">Просмотреть результаты тестирований</a>
+		</div>
+	
+
+</div>
+
+
+{% endblock %}
